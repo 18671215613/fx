@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.aptech.mapper.TSuiteMapper">
+    <resultMap id="BaseResultMap" type="cn.aptech.pojo.TSuite">
+        <id column="suite_id" property="suiteId" jdbcType="INTEGER"/>
+        <result column="suite_code" property="suiteCode" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="testnum" property="testnum" jdbcType="INTEGER"/>
+        <result column="favnum" property="favnum" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="reply_num" property="replyNum" jdbcType="INTEGER"/>
+        <result column="question_num" property="questionNum" jdbcType="INTEGER"/>
+        <result column="picture" property="picture" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="issuggest" property="issuggest" jdbcType="INTEGER"/>
+        <result column="module_code" property="moduleCode" jdbcType="VARCHAR"/>
+        <result column="stiue_id" property="stiueId" jdbcType="INTEGER"/>
+        <result column="stuite_code" property="stuiteCode" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    suite_id, suite_code, title, testnum, favnum, create_time, reply_num, question_num, 
+    picture, description, issuggest, module_code, stiue_id, stuite_code
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.aptech.pojo.TSuiteExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from t_suite
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_suite
+        where suite_id = #{suiteId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_suite
+    where suite_id = #{suiteId,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="cn.aptech.pojo.TSuiteExample">
+        delete from t_suite
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="cn.aptech.pojo.TSuite">
+    insert into t_suite (suite_id, suite_code, title, 
+      testnum, favnum, create_time, 
+      reply_num, question_num, picture, 
+      description, issuggest, module_code, 
+      stiue_id, stuite_code)
+    values (#{suiteId,jdbcType=INTEGER}, #{suiteCode,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{testnum,jdbcType=INTEGER}, #{favnum,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR}, 
+      #{replyNum,jdbcType=INTEGER}, #{questionNum,jdbcType=INTEGER}, #{picture,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{issuggest,jdbcType=INTEGER}, #{moduleCode,jdbcType=VARCHAR}, 
+      #{stiueId,jdbcType=INTEGER}, #{stuiteCode,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="cn.aptech.pojo.TSuite">
+        insert into t_suite
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="suiteId != null">
+                suite_id,
+            </if>
+            <if test="suiteCode != null">
+                suite_code,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="testnum != null">
+                testnum,
+            </if>
+            <if test="favnum != null">
+                favnum,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="replyNum != null">
+                reply_num,
+            </if>
+            <if test="questionNum != null">
+                question_num,
+            </if>
+            <if test="picture != null">
+                picture,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="issuggest != null">
+                issuggest,
+            </if>
+            <if test="moduleCode != null">
+                module_code,
+            </if>
+            <if test="stiueId != null">
+                stiue_id,
+            </if>
+            <if test="stuiteCode != null">
+                stuite_code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="suiteId != null">
+                #{suiteId,jdbcType=INTEGER},
+            </if>
+            <if test="suiteCode != null">
+                #{suiteCode,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="testnum != null">
+                #{testnum,jdbcType=INTEGER},
+            </if>
+            <if test="favnum != null">
+                #{favnum,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="replyNum != null">
+                #{replyNum,jdbcType=INTEGER},
+            </if>
+            <if test="questionNum != null">
+                #{questionNum,jdbcType=INTEGER},
+            </if>
+            <if test="picture != null">
+                #{picture,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="issuggest != null">
+                #{issuggest,jdbcType=INTEGER},
+            </if>
+            <if test="moduleCode != null">
+                #{moduleCode,jdbcType=VARCHAR},
+            </if>
+            <if test="stiueId != null">
+                #{stiueId,jdbcType=INTEGER},
+            </if>
+            <if test="stuiteCode != null">
+                #{stuiteCode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="cn.aptech.pojo.TSuiteExample" resultType="java.lang.Integer">
+        select count(*) from t_suite
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update t_suite
+        <set>
+            <if test="record.suiteId != null">
+                suite_id = #{record.suiteId,jdbcType=INTEGER},
+            </if>
+            <if test="record.suiteCode != null">
+                suite_code = #{record.suiteCode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.title != null">
+                title = #{record.title,jdbcType=VARCHAR},
+            </if>
+            <if test="record.testnum != null">
+                testnum = #{record.testnum,jdbcType=INTEGER},
+            </if>
+            <if test="record.favnum != null">
+                favnum = #{record.favnum,jdbcType=INTEGER},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.replyNum != null">
+                reply_num = #{record.replyNum,jdbcType=INTEGER},
+            </if>
+            <if test="record.questionNum != null">
+                question_num = #{record.questionNum,jdbcType=INTEGER},
+            </if>
+            <if test="record.picture != null">
+                picture = #{record.picture,jdbcType=VARCHAR},
+            </if>
+            <if test="record.description != null">
+                description = #{record.description,jdbcType=VARCHAR},
+            </if>
+            <if test="record.issuggest != null">
+                issuggest = #{record.issuggest,jdbcType=INTEGER},
+            </if>
+            <if test="record.moduleCode != null">
+                module_code = #{record.moduleCode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.stiueId != null">
+                stiue_id = #{record.stiueId,jdbcType=INTEGER},
+            </if>
+            <if test="record.stuiteCode != null">
+                stuite_code = #{record.stuiteCode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update t_suite
+        set suite_id = #{record.suiteId,jdbcType=INTEGER},
+        suite_code = #{record.suiteCode,jdbcType=VARCHAR},
+        title = #{record.title,jdbcType=VARCHAR},
+        testnum = #{record.testnum,jdbcType=INTEGER},
+        favnum = #{record.favnum,jdbcType=INTEGER},
+        create_time = #{record.createTime,jdbcType=VARCHAR},
+        reply_num = #{record.replyNum,jdbcType=INTEGER},
+        question_num = #{record.questionNum,jdbcType=INTEGER},
+        picture = #{record.picture,jdbcType=VARCHAR},
+        description = #{record.description,jdbcType=VARCHAR},
+        issuggest = #{record.issuggest,jdbcType=INTEGER},
+        module_code = #{record.moduleCode,jdbcType=VARCHAR},
+        stiue_id = #{record.stiueId,jdbcType=INTEGER},
+        stuite_code = #{record.stuiteCode,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.aptech.pojo.TSuite">
+        update t_suite
+        <set>
+            <if test="suiteCode != null">
+                suite_code = #{suiteCode,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="testnum != null">
+                testnum = #{testnum,jdbcType=INTEGER},
+            </if>
+            <if test="favnum != null">
+                favnum = #{favnum,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="replyNum != null">
+                reply_num = #{replyNum,jdbcType=INTEGER},
+            </if>
+            <if test="questionNum != null">
+                question_num = #{questionNum,jdbcType=INTEGER},
+            </if>
+            <if test="picture != null">
+                picture = #{picture,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="issuggest != null">
+                issuggest = #{issuggest,jdbcType=INTEGER},
+            </if>
+            <if test="moduleCode != null">
+                module_code = #{moduleCode,jdbcType=VARCHAR},
+            </if>
+            <if test="stiueId != null">
+                stiue_id = #{stiueId,jdbcType=INTEGER},
+            </if>
+            <if test="stuiteCode != null">
+                stuite_code = #{stuiteCode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where suite_id = #{suiteId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.aptech.pojo.TSuite">
+    update t_suite
+    set suite_code = #{suiteCode,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      testnum = #{testnum,jdbcType=INTEGER},
+      favnum = #{favnum,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      reply_num = #{replyNum,jdbcType=INTEGER},
+      question_num = #{questionNum,jdbcType=INTEGER},
+      picture = #{picture,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      issuggest = #{issuggest,jdbcType=INTEGER},
+      module_code = #{moduleCode,jdbcType=VARCHAR},
+      stiue_id = #{stiueId,jdbcType=INTEGER},
+      stuite_code = #{stuiteCode,jdbcType=VARCHAR}
+    where suite_id = #{suiteId,jdbcType=INTEGER}
+  </update>
+
+    <select id="getTSuiteList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from t_suite where issuggest=1 order by testnum desc limit 0,#{n}
+    </select>
+    <select id="getTSuiteAll" resultMap="BaseResultMap">
+        select * from t_suite where issuggest=1 and module_code=#{moduleCode} order by testnum desc limit 0,#{n}
+    </select>
+    <select id="selectModuleToN" resultMap="BaseResultMap">
+        select * from t_suite where issuggest=1 and module_code=#{moduleCode} order by testnum desc limit #{first},#{showNum}
+    </select>
+</mapper>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.aptech.mapper.TTestorRecordMapper" >
+  <resultMap id="BaseResultMap" type="cn.aptech.pojo.TTestorRecord" >
+    <id column="TR_ID" property="trId" jdbcType="INTEGER" />
+    <result column="SUITE_CODE" property="suiteCode" jdbcType="VARCHAR" />
+    <result column="QUESTION_CODE" property="questionCode" jdbcType="VARCHAR" />
+    <result column="OPTION_CODE" property="optionCode" jdbcType="VARCHAR" />
+    <result column="SCORE" property="score" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    TR_ID, SUITE_CODE, QUESTION_CODE, OPTION_CODE, SCORE, CREATE_TIME, USER_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.aptech.pojo.TTestorRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_testor_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_testor_record
+    where TR_ID = #{trId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_testor_record
+    where TR_ID = #{trId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.aptech.pojo.TTestorRecordExample" >
+    delete from t_testor_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.aptech.pojo.TTestorRecord" >
+    insert into t_testor_record (TR_ID, SUITE_CODE, QUESTION_CODE, 
+      OPTION_CODE, SCORE, CREATE_TIME, 
+      USER_ID)
+    values (#{trId,jdbcType=INTEGER}, #{suiteCode,jdbcType=VARCHAR}, #{questionCode,jdbcType=VARCHAR}, 
+      #{optionCode,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.aptech.pojo.TTestorRecord" >
+    insert into t_testor_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="trId != null" >
+        TR_ID,
+      </if>
+      <if test="suiteCode != null" >
+        SUITE_CODE,
+      </if>
+      <if test="questionCode != null" >
+        QUESTION_CODE,
+      </if>
+      <if test="optionCode != null" >
+        OPTION_CODE,
+      </if>
+      <if test="score != null" >
+        SCORE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="trId != null" >
+        #{trId,jdbcType=INTEGER},
+      </if>
+      <if test="suiteCode != null" >
+        #{suiteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionCode != null" >
+        #{questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="optionCode != null" >
+        #{optionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.aptech.pojo.TTestorRecordExample" resultType="java.lang.Integer" >
+    select count(*) from t_testor_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_testor_record
+    <set >
+      <if test="record.trId != null" >
+        TR_ID = #{record.trId,jdbcType=INTEGER},
+      </if>
+      <if test="record.suiteCode != null" >
+        SUITE_CODE = #{record.suiteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionCode != null" >
+        QUESTION_CODE = #{record.questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optionCode != null" >
+        OPTION_CODE = #{record.optionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.score != null" >
+        SCORE = #{record.score,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_testor_record
+    set TR_ID = #{record.trId,jdbcType=INTEGER},
+      SUITE_CODE = #{record.suiteCode,jdbcType=VARCHAR},
+      QUESTION_CODE = #{record.questionCode,jdbcType=VARCHAR},
+      OPTION_CODE = #{record.optionCode,jdbcType=VARCHAR},
+      SCORE = #{record.score,jdbcType=DECIMAL},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      USER_ID = #{record.userId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.aptech.pojo.TTestorRecord" >
+    update t_testor_record
+    <set >
+      <if test="suiteCode != null" >
+        SUITE_CODE = #{suiteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionCode != null" >
+        QUESTION_CODE = #{questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="optionCode != null" >
+        OPTION_CODE = #{optionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        SCORE = #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TR_ID = #{trId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.aptech.pojo.TTestorRecord" >
+    update t_testor_record
+    set SUITE_CODE = #{suiteCode,jdbcType=VARCHAR},
+      QUESTION_CODE = #{questionCode,jdbcType=VARCHAR},
+      OPTION_CODE = #{optionCode,jdbcType=VARCHAR},
+      SCORE = #{score,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      USER_ID = #{userId,jdbcType=VARCHAR}
+    where TR_ID = #{trId,jdbcType=INTEGER}
+  </update>
+  <select id="getCountScore" resultType="java.lang.Integer">
+    select sum(SCORE) from t_testor_record where SUITE_CODE=#{suiteCode} and USER_ID=#{userId}
+  </select>
+</mapper>

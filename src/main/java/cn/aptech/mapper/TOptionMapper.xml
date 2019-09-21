@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.aptech.mapper.TOptionMapper" >
+  <resultMap id="BaseResultMap" type="cn.aptech.pojo.TOption" >
+    <result column="OPTION_ID" property="optionId" jdbcType="DECIMAL" />
+    <result column="SCORE" property="score" jdbcType="DECIMAL" />
+    <result column="NEXT_QUESTION_CODE" property="nextQuestionCode" jdbcType="VARCHAR" />
+    <result column="OPTION_CODE" property="optionCode" jdbcType="VARCHAR" />
+    <result column="QUESTION_CODE" property="questionCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.aptech.pojo.TOption" extends="BaseResultMap" >
+    <result column="TITLE" property="title" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    OPTION_ID, SCORE, NEXT_QUESTION_CODE, OPTION_CODE, QUESTION_CODE ,TITLE
+  </sql>
+  <sql id="Blob_Column_List" >
+    TITLE
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.aptech.pojo.TOptionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_option
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.aptech.pojo.TOptionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_option
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="cn.aptech.pojo.TOptionExample" >
+    delete from t_option
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.aptech.pojo.TOption" >
+    insert into t_option (OPTION_ID, SCORE, NEXT_QUESTION_CODE, 
+      OPTION_CODE, QUESTION_CODE, TITLE
+      )
+    values (#{optionId,jdbcType=DECIMAL}, #{score,jdbcType=DECIMAL}, #{nextQuestionCode,jdbcType=VARCHAR}, 
+      #{optionCode,jdbcType=VARCHAR}, #{questionCode,jdbcType=VARCHAR}, #{title,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.aptech.pojo.TOption" >
+    insert into t_option
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="optionId != null" >
+        OPTION_ID,
+      </if>
+      <if test="score != null" >
+        SCORE,
+      </if>
+      <if test="nextQuestionCode != null" >
+        NEXT_QUESTION_CODE,
+      </if>
+      <if test="optionCode != null" >
+        OPTION_CODE,
+      </if>
+      <if test="questionCode != null" >
+        QUESTION_CODE,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="optionId != null" >
+        #{optionId,jdbcType=DECIMAL},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="nextQuestionCode != null" >
+        #{nextQuestionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="optionCode != null" >
+        #{optionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionCode != null" >
+        #{questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.aptech.pojo.TOptionExample" resultType="java.lang.Integer" >
+    select count(*) from t_option
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_option
+    <set >
+      <if test="record.optionId != null" >
+        OPTION_ID = #{record.optionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.score != null" >
+        SCORE = #{record.score,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nextQuestionCode != null" >
+        NEXT_QUESTION_CODE = #{record.nextQuestionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optionCode != null" >
+        OPTION_CODE = #{record.optionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionCode != null" >
+        QUESTION_CODE = #{record.questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        TITLE = #{record.title,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_option
+    set OPTION_ID = #{record.optionId,jdbcType=DECIMAL},
+      SCORE = #{record.score,jdbcType=DECIMAL},
+      NEXT_QUESTION_CODE = #{record.nextQuestionCode,jdbcType=VARCHAR},
+      OPTION_CODE = #{record.optionCode,jdbcType=VARCHAR},
+      QUESTION_CODE = #{record.questionCode,jdbcType=VARCHAR},
+      TITLE = #{record.title,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_option
+    set OPTION_ID = #{record.optionId,jdbcType=DECIMAL},
+      SCORE = #{record.score,jdbcType=DECIMAL},
+      NEXT_QUESTION_CODE = #{record.nextQuestionCode,jdbcType=VARCHAR},
+      OPTION_CODE = #{record.optionCode,jdbcType=VARCHAR},
+      QUESTION_CODE = #{record.questionCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

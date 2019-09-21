@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.aptech.mapper.TQuestionMapper" >
+  <resultMap id="BaseResultMap" type="cn.aptech.pojo.TQuestion" >
+    <id column="QUESTION_ID" property="questionId" jdbcType="DECIMAL" />
+    <result column="ORDER_NO" property="orderNo" jdbcType="DECIMAL" />
+    <result column="SUITE_CODE" property="suiteCode" jdbcType="VARCHAR" />
+    <result column="QUESTION_CODE" property="questionCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.aptech.pojo.TQuestion" extends="BaseResultMap" >
+    <result column="TITLE" property="title" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    QUESTION_ID, ORDER_NO, SUITE_CODE, QUESTION_CODE,TITLE
+  </sql>
+  <sql id="Blob_Column_List" >
+    TITLE
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.aptech.pojo.TQuestionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.aptech.pojo.TQuestionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_question
+    where QUESTION_ID = #{questionId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_question
+    where QUESTION_ID = #{questionId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.aptech.pojo.TQuestionExample" >
+    delete from t_question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.aptech.pojo.TQuestion" >
+    insert into t_question (QUESTION_ID, ORDER_NO, SUITE_CODE, 
+      QUESTION_CODE, TITLE)
+    values (#{questionId,jdbcType=DECIMAL}, #{orderNo,jdbcType=DECIMAL}, #{suiteCode,jdbcType=VARCHAR}, 
+      #{questionCode,jdbcType=VARCHAR}, #{title,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.aptech.pojo.TQuestion" >
+    insert into t_question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="questionId != null" >
+        QUESTION_ID,
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO,
+      </if>
+      <if test="suiteCode != null" >
+        SUITE_CODE,
+      </if>
+      <if test="questionCode != null" >
+        QUESTION_CODE,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="questionId != null" >
+        #{questionId,jdbcType=DECIMAL},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=DECIMAL},
+      </if>
+      <if test="suiteCode != null" >
+        #{suiteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionCode != null" >
+        #{questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.aptech.pojo.TQuestionExample" resultType="java.lang.Integer" >
+    select count(*) from t_question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_question
+    <set >
+      <if test="record.questionId != null" >
+        QUESTION_ID = #{record.questionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderNo != null" >
+        ORDER_NO = #{record.orderNo,jdbcType=DECIMAL},
+      </if>
+      <if test="record.suiteCode != null" >
+        SUITE_CODE = #{record.suiteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionCode != null" >
+        QUESTION_CODE = #{record.questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        TITLE = #{record.title,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_question
+    set QUESTION_ID = #{record.questionId,jdbcType=DECIMAL},
+      ORDER_NO = #{record.orderNo,jdbcType=DECIMAL},
+      SUITE_CODE = #{record.suiteCode,jdbcType=VARCHAR},
+      QUESTION_CODE = #{record.questionCode,jdbcType=VARCHAR},
+      TITLE = #{record.title,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_question
+    set QUESTION_ID = #{record.questionId,jdbcType=DECIMAL},
+      ORDER_NO = #{record.orderNo,jdbcType=DECIMAL},
+      SUITE_CODE = #{record.suiteCode,jdbcType=VARCHAR},
+      QUESTION_CODE = #{record.questionCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.aptech.pojo.TQuestion" >
+    update t_question
+    <set >
+      <if test="orderNo != null" >
+        ORDER_NO = #{orderNo,jdbcType=DECIMAL},
+      </if>
+      <if test="suiteCode != null" >
+        SUITE_CODE = #{suiteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionCode != null" >
+        QUESTION_CODE = #{questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where QUESTION_ID = #{questionId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.aptech.pojo.TQuestion" >
+    update t_question
+    set ORDER_NO = #{orderNo,jdbcType=DECIMAL},
+      SUITE_CODE = #{suiteCode,jdbcType=VARCHAR},
+      QUESTION_CODE = #{questionCode,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=LONGVARCHAR}
+    where QUESTION_ID = #{questionId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.aptech.pojo.TQuestion" >
+    update t_question
+    set ORDER_NO = #{orderNo,jdbcType=DECIMAL},
+      SUITE_CODE = #{suiteCode,jdbcType=VARCHAR},
+      QUESTION_CODE = #{questionCode,jdbcType=VARCHAR}
+    where QUESTION_ID = #{questionId,jdbcType=DECIMAL}
+  </update>
+</mapper>
